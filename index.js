@@ -58,7 +58,7 @@ client.on('messageCreate', async (message) => {
 
   for (const word of msgArr) {
     if(suspicious.includes(word)) {
-      await sleep(1000);
+      await sleep(5000);
       await message.reply(susResponses[Math.floor(Math.random() * susResponses.length)]);
     }
   }
