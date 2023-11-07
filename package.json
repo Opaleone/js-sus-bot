@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "setCommands": "node src/functions/register-commands.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord": "^0.8.2",
     "discord.js": "^14.13.0"
   },
   "devDependencies": {
