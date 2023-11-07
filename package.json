@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "setCommands": "node src/functions/register-commands.js",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord": "^0.8.2"
+    "discord": "^0.8.2",
+    "discord.js": "^14.13.0"
   },
   "devDependencies": {
     "eslint": "^8.53.0"
