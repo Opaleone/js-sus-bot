@@ -19,6 +19,12 @@ module.exports = {
       .setName('pp')
       .setDescription('PP CHECK!'),
     async execute(interaction) {
+      if (interaction.guildId === '690308107007557652') {
+        if (interaction.channelId !== '1171394157475008572') {
+          return;
+        }
+      }
+
       const truckStatus = ['hard', 'soft'];
       const size = Math.round(Math.random() * 15);
       const status = truckStatus[Math.floor(Math.random() * truckStatus.length)];
