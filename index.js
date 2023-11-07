@@ -5,7 +5,7 @@ const { token } = require('./config.json');
 const sleep = require('./utils/sleep')
 
 const suspicious = ['cock', 'fuck me', 'hard', 'chub', 'daddy', 'horny', 'sexy', 'thicc', 'papi', 'head',
-'mami', 'mommy', 'trans', 'cum', 'coom', 'sus', 'whore', 'bitch', 'erect', 'pipe', 'flaccid',
+'mami', 'mommy', 'trans', 'cum', 'coom', 'whore', 'bitch', 'erect', 'pipe', 'flaccid',
 'masturbate', 'beat my meat', 'splooge', 'fat cheeks', 'bussy', 'sploosh', 'foreskin'];
 
 const susResponses = ['ayoooo?!?!', 'Pause', 'Wut?', 'Wanna run that by me again?', 'no shot', 'HUH?!?!', "Ain't no way",
