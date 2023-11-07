@@ -2,14 +2,14 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
-const sleep = require('./utils/sleep')
+const sleep = require('./utils/sleep');
 
 const suspicious = ['cock', 'fuck me', 'hard', 'chub', 'daddy', 'horny', 'sexy', 'thicc', 'papi', 'head',
 'mami', 'mommy', 'trans', 'cum', 'coom', 'whore', 'bitch', 'erect', 'pipe', 'flaccid',
 'masturbate', 'beat my meat', 'splooge', 'fat cheeks', 'bussy', 'sploosh', 'foreskin'];
 
 const susResponses = ['ayoooo?!?!', 'Pause', 'Wut?', 'Wanna run that by me again?', 'no shot', 'HUH?!?!', "Ain't no way",
-'Yo wuuuuuuuuut', 'No maidens??', "No thanks, I'm a vegetarian."]
+'Yo wuuuuuuuuut', 'No maidens??', "No thanks, I'm a vegetarian."];
 
 const client = new Client({ 
   intents: [
@@ -62,6 +62,6 @@ client.on('messageCreate', async (message) => {
       await message.reply(susResponses[Math.floor(Math.random() * susResponses.length)]);
     }
   }
-})
+});
 
 client.login(token);
