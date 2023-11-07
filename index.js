@@ -2,8 +2,22 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
+const sleep = require('./utils/sleep')
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const suspicious = ['cock', 'fuck me', 'hard', 'chub', 'daddy', 'horny', 'sexy', 'thicc', 'papi', 'head',
+'mami', 'mommy', 'trans', 'cum', 'coom', 'sus', 'whore', 'bitch', 'erect', 'pipe', 'flaccid',
+'masturbate', 'beat my meat', 'splooge', 'fat cheeks', 'bussy', 'sploosh', 'foreskin'];
+
+const susResponses = ['ayoooo?!?!', 'Pause', 'Wut?', 'Wanna run that by me again?', 'no shot', 'HUH?!?!', "Ain't no way",
+'Yo wuuuuuuuuut', 'No maidens??', "No thanks, I'm a vegetarian."]
+
+const client = new Client({ 
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent
+  ] 
+});
 
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, './src/commands');
@@ -35,5 +49,19 @@ for (const file of eventFiles) {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
 }
+
+client.on('messageCreate', async (message) => {
+	if (message.author.id === client.user.id) return;
+
+  const msg = message.content.toLowerCase();
+  const msgArr = msg.split(' ');
+
+  for (const word of msgArr) {
+    if(suspicious.includes(word)) {
+      await sleep(1000);
+      await message.reply(susResponses[Math.floor(Math.random() * susResponses.length)]);
+    }
+  }
+})
 
 client.login(token);
