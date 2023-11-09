@@ -21,6 +21,7 @@ module.exports = {
     async execute(interaction) {
       if (interaction.guildId === '690308107007557652') {
         if (interaction.channelId !== '1171394157475008572') {
+          await interaction.reply({ content: "Command must be run in #pp-check channel!", ephemeral: true });
           return;
         }
       }
