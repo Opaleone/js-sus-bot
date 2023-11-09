@@ -11,6 +11,9 @@ const suspicious = ['cock', 'fuck me', 'hard', 'chub', 'daddy', 'horny', 'sexy',
 const susResponses = ['ayoooo?!?!', 'Pause', 'Wut?', 'Wanna run that by me again?', 'no shot', 'HUH?!?!', "Ain't no way",
 'Yo wuuuuuuuuut', 'No maidens??', "No thanks, I'm a vegetarian."];
 
+let randomNum = Math.floor(Math.random() * 5);
+let cnt = 0;
+
 const client = new Client({ 
   intents: [
     GatewayIntentBits.Guilds,
@@ -51,17 +54,42 @@ for (const file of eventFiles) {
 }
 
 client.on('messageCreate', async (message) => {
+	// does nothing if message creator is bot
 	if (message.author.id === client.user.id) return;
 
   const msg = message.content.toLowerCase();
   const msgArr = msg.split(' ');
 
+	// Checks if word is sus and responds accordingly
   for (const word of msgArr) {
     if(suspicious.includes(word)) {
       await sleep(5000);
       await message.reply(susResponses[Math.floor(Math.random() * susResponses.length)]);
     }
   }
+
+	// command to MOCK hemmie
+	if (message.author.username === "hemmie49") {
+		if (cnt === randomNum) {
+			let mock = '';
+			const msgArr = msg.split('');
+
+			for (let i = 0; i < msgArr.length; i++) {
+				if (i % 2 === 0) {
+					mock += msgArr[i].toLowerCase();
+				} else {
+					mock += msgArr[i].toUpperCase();
+				}
+			}
+
+			randomNum = Math.floor(Math.random() * 5);
+			cnt = 0;
+
+			sleep(1000);
+			await message.reply(mock);
+		}
+		cnt++;
+	}
 });
 
 client.login(token);
