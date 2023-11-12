@@ -4,12 +4,16 @@ dailyPP = {};
 const ppCheck = (size, status, curUser) => {
   dailyPP[curUser] = 1;
   console.log(dailyPP);
-  if (size > 8) {
-    return `You are ${size} inches ${status}.\n:eggplant:`;
-  } else if (size <= 3) {
-    return `You are ${size} inches ${status}.\n:microscope:`;
-  } else {
-    return `You are ${size} inches ${status}.\n:fried_shrimp:`;
+  
+  switch(size) {
+    case (size > 8):
+      return `You are ${size} inches ${status}.\n:eggplant:`;
+      break;
+    case (size <= 3):
+      return `You are ${size} inches ${status}.\n:microscope:`;
+      break;
+    default:
+      return `You are ${size} inches ${status}.\n:fried_shrimp:`;
   }
 }
 
