@@ -11,14 +11,15 @@ const suspicious = ['cock', 'fuck me', 'hard', 'chub', 'daddy', 'horny', 'sexy',
 const susResponses = ['ayoooo?!?!', 'Pause', 'Wut?', 'Wanna run that by me again?', 'no shot', 'HUH?!?!', "Ain't no way",
 'Yo wuuuuuuuuut', 'No maidens??', "No thanks, I'm a vegetarian."];
 
-let randomNum = Math.floor(Math.random() * 5);
-let cnt = 0;
+// let randomNum = Math.floor(Math.random() * 5);
+// let cnt = 0;
 
 const client = new Client({ 
   intents: [
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.MessageContent
+    GatewayIntentBits.MessageContent,
+		GatewayIntentBits.GuildMessageReactions
   ] 
 });
 
@@ -69,27 +70,31 @@ client.on('messageCreate', async (message) => {
   }
 
 	// command to MOCK hemmie
-	if (message.author.username === "hemmie49") {
-		if (cnt === randomNum) {
-			let mock = '';
-			const msgArr = msg.split('');
+	// if (message.author.username === "hemmie49") {
+	// 	if (cnt === randomNum) {
+	// 		let mock = '';
+	// 		const msgArr = msg.split('');
 
-			for (let i = 0; i < msgArr.length; i++) {
-				if (i % 2 === 0) {
-					mock += msgArr[i].toLowerCase();
-				} else {
-					mock += msgArr[i].toUpperCase();
-				}
-			}
+	// 		for (let i = 0; i < msgArr.length; i++) {
+	// 			if (i % 2 === 0) {
+	// 				mock += msgArr[i].toLowerCase();
+	// 			} else {
+	// 				mock += msgArr[i].toUpperCase();
+	// 			}
+	// 		}
 
-			randomNum = Math.floor(Math.random() * 5);
-			cnt = 0;
+	// 		randomNum = Math.floor(Math.random() * 5);
+	// 		cnt = -1;
 
-			sleep(1000);
-			await message.reply(mock);
-		}
-		cnt++;
-	}
+	// 		sleep(1000);
+	// 		await message.reply(mock);
+
+	// 		// Reply should be:
+	// 				// e.x. What is this?
+	// 				// Reply: wHaT Is tHiS?
+	// 	}
+	// 	cnt++;
+	// }
 });
 
 client.login(token);
