@@ -69,8 +69,8 @@ client.on('messageCreate', async (message) => {
     }
   }
 
-	// command to MOCK hemmie
-	// if (message.author.username === "hemmie49") {
+	// command to MOCK someone
+	// if (message.author.username === "// username") {
 	// 	if (cnt === randomNum) {
 	// 		let mock = '';
 	// 		const msgArr = msg.split('');
