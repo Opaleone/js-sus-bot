@@ -2,8 +2,8 @@ const { SlashCommandBuilder } = require('discord.js');
 const fs = require("fs");
 const todayDate = new Date().toJSON();
 
-//opal0744: 1,
-dailyPP = {hemmie49: 1, gapytoad: 1, hel228: 1, imaginepigeons: 1};
+
+dailyPP = {};
 
 const ppCheck = (size, status, curUser) => {
   dailyPP[curUser] = 1;
