@@ -11,9 +11,6 @@ const suspicious = ['cock', 'fuck me', 'hard', 'chub', 'daddy', 'horny', 'sexy',
 const susResponses = ['ayoooo?!?!', 'Pause', 'Wut?', 'Wanna run that by me again?', 'no shot', 'HUH?!?!', "Ain't no way",
 'Yo wuuuuuuuuut', 'No maidens??', "No thanks, I'm a vegetarian."];
 
-// let randomNum = Math.floor(Math.random() * 5);
-// let cnt = 0;
-
 const client = new Client({ 
   intents: [
     GatewayIntentBits.Guilds,
