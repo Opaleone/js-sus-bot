@@ -15,7 +15,12 @@ module.exports = {
     try {
       await command.execute(interaction);
     } catch (e) {
-      console.error(e);
+      const curTimeDate = new Date().toJSON();
+      const msg = `interactionCreate.js:: ${curTimeDate}: ${e.message}\n`;
+
+      fs.appendFile('errors.log', msg, (err) => {
+        if (err) console.error(err)
+      })
     }
   }
 }

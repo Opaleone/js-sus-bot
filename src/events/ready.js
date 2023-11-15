@@ -4,13 +4,22 @@ module.exports = {
   name: Events.ClientReady,
   once: true,
   execute(client) {
-    const guilds = client.guilds.cache.map(guild => guild);
+    try {  
+      const guilds = client.guilds.cache.map(guild => guild);
 
-    client.user.setActivity('for SUS messages...', { type: ActivityType.Watching });
+      client.user.setActivity('for SUS messages...', { type: ActivityType.Watching });
 
-    console.log(`Ready! Logged in as ${client.user.tag}`);
-    for (const guild of guilds) {
-      console.log(`Joined ${guild.name}: ${guild.id}`);
+      console.log(`Ready! Logged in as ${client.user.tag}`);
+      for (const guild of guilds) {
+        console.log(`Joined ${guild.name}: ${guild.id}`);
+      }
+    } catch (e) {
+      const curTimeDate = new Date().toJSON();
+      const msg = `ready.js:: ${curTimeDate}: ${e.message}\n`;
+
+      fs.appendFile('errors.log', msg, (err) => {
+        if (err) console.error(err)
+      })
     }
   }
 }

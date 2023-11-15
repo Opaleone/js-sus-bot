@@ -45,7 +45,7 @@ module.exports = {
       
       return await interaction.reply(ppCheck(size, status, curUser));
     } catch (e) {
-      let msg = `truckStatus.js:: ${todayDate}: ${e.message}\n`;
+      const msg = `truckStatus.js:: ${todayDate}: ${e.message}\n`;
 
       fs.appendFile('errors.log', msg, (err) => {
         if (err) console.error(err)

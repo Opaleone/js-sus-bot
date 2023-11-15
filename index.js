@@ -71,7 +71,7 @@ client.on('messageCreate', async (message) => {
 		}
 	} catch (e) {
 		const curTimeDate = new Date().toJSON();
-		let msg = `index.js:: ${curTimeDate}: ${e.message}\n`;
+		const msg = `index.js:: ${curTimeDate}: ${e.message}\n`;
 
 		fs.appendFile('errors.log', msg, (err) => {
 			if (err) console.error(err)

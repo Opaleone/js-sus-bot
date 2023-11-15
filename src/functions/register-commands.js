@@ -34,6 +34,11 @@ const rest = new REST().setToken(token);
 
     console.log(`Successfully reloaded ${data.length} application commands.`);
   } catch (e) {
-    console.log(e);
+    const curTimeDate = new Date().toJSON();
+		let msg = `register-commands.js:: ${curTimeDate}: ${e.message}\n`;
+
+		fs.appendFile('errors.log', msg, (err) => {
+			if (err) console.error(err)
+		})
   }
 })();
