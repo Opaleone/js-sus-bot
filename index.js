@@ -59,9 +59,10 @@ client.on('messageCreate', async (message) => {
 		const msg = message.content.toLowerCase();
 		const msgArr = msg.split(' ');
 
-		// Checks if word is sus and responds accordingly
+		// checks if message contains any suspicious words
 		for (const word of msgArr) {
 			if(suspicious.includes(word)) {
+				// waits 5 seconds before replying
 				await sleep(5000);
 				await message.reply(susResponses[Math.floor(Math.random() * susResponses.length)]);
 			}

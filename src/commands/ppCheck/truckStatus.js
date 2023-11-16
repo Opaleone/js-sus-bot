@@ -29,6 +29,7 @@ module.exports = {
       .setDescription('PP CHECK!'),
   async execute(interaction) {
     try {  
+      // Checks if command is being used in the correct channel
       if (interaction.guildId === '690308107007557652') {
         if (interaction.channelId !== '1171394157475008572') {
           return await interaction.reply({ content: "Try this in #pp-check channel!", ephemeral: true });
@@ -47,6 +48,7 @@ module.exports = {
       const msg = `truckStatus.js:: ${todayDate}: ${e.message}\n`;
       const todayDate = new Date().toJSON();
 
+      // Log error to file
       fs.appendFile('errors.log', msg, (err) => {
         if (err) console.error(err)
       })
