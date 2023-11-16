@@ -1,13 +1,12 @@
 const { SlashCommandBuilder } = require('discord.js');
 const fs = require("fs");
-const todayDate = new Date().toJSON();
-
 
 dailyPP = {};
 
 const ppCheck = (size, status, curUser) => {
   dailyPP[curUser] = 1;
   console.log(dailyPP);
+  const todayDate = new Date().toJSON();
 
   const data = `${todayDate}: ${curUser} - ${size} - ${status}\n`
 
@@ -46,6 +45,7 @@ module.exports = {
       return await interaction.reply(ppCheck(size, status, curUser));
     } catch (e) {
       const msg = `truckStatus.js:: ${todayDate}: ${e.message}\n`;
+      const todayDate = new Date().toJSON();
 
       fs.appendFile('errors.log', msg, (err) => {
         if (err) console.error(err)
