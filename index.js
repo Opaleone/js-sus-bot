@@ -67,9 +67,11 @@ client.on('messageCreate', async (message) => {
 				await message.reply(susResponses[Math.floor(Math.random() * susResponses.length)]);
 			}
 		}
+
+    console.log(leone);
 	} catch (e) {
+		const msg = `${curTimeDate}: ${e.message} ::index.js::\n`;
 		const curTimeDate = new Date().toJSON();
-		const msg = `index.js:: ${curTimeDate}: ${e.message}\n`;
 
 		fs.appendFile('errors.log', msg, (err) => {
 			if (err) console.error(err)
