@@ -20,6 +20,25 @@ const client = new Client({
   ] 
 });
 
+const ppCheckFile = fs.readFile('ppCheck.log', (err) => {
+	console.log(err);
+})
+
+if (ppCheckFile) {
+	// do something();
+} else {
+	const stars = '*'.repeat(50);
+	const todayDateF = new Date()
+	const today = todayDateF.toLocaleDateString();
+
+	const str = `${stars}\n${today}\n${stars}`;
+
+
+	fs.appendFile('ppCheck.log', str, (err) => {
+		console.log(err);
+	})
+}
+
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, './src/commands');
 const commandFolders = fs.readdirSync(foldersPath);
