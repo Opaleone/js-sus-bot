@@ -42,7 +42,6 @@ module.exports = {
       const curUser = interaction.user.username;
 
       if (curUser in dailyPP) return await interaction.reply({ content: "You've already checked your pp today. Try again tomorrow!", ephemeral: true });
-      console.log(leone)
       return await interaction.reply(ppCheck(size, status, curUser));
     } catch (e) {
       const msg = `${todayDate}: ${e.message} ::truckStatus.js::\n`;

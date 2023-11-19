@@ -67,8 +67,6 @@ client.on('messageCreate', async (message) => {
 				await message.reply(susResponses[Math.floor(Math.random() * susResponses.length)]);
 			}
 		}
-
-    console.log(leone);
 	} catch (e) {
 		const msg = `${curTimeDate}: ${e.message} ::index.js::\n`;
 		const curTimeDate = new Date().toJSON();
