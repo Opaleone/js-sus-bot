@@ -15,12 +15,12 @@ module.exports = {
 
       const curUser = interaction.user.username;
       const average = (ppAvg[curUser].total / ppAvg[curUser].count).toFixed(2);
-      
+
       if (ppAvg[curUser]) return await interaction.reply(`Your average peen size is ${average} inches.`); 
       else return await interaction.reply({ content: `You haven't done a pp check yet.\n\nGet checked by yours truly with /pp.`, ephemeral: true });
     } catch (e) {
       const todayDate = new Date().toJSON();
-      const msg = `${todayDate}: ${e.message} ::truckStatus.js::\n`;
+      const msg = `${todayDate}: ${e.message} ::average.js::\n`;
 
       // Log error to file
       fs.appendFile('errors.log', msg, (err) => {
