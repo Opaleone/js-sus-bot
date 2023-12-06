@@ -26,7 +26,6 @@ const rest = new REST().setToken(token);
 (async () => {
   try {
     console.log(`Started refreshing ${commands.length} application (/) commands.`);
-    
     const data = await rest.put(
       Routes.applicationCommands(clientId),
       { body: commands }
@@ -35,7 +34,7 @@ const rest = new REST().setToken(token);
     console.log(`Successfully reloaded ${data.length} application commands.`);
   } catch (e) {
     const curTimeDate = new Date().toJSON();
-		let msg = `register-commands.js:: ${curTimeDate}: ${e.message}\n`;
+		let msg = `${curTimeDate}: ${e} ::register-commands.js::\n`;
 
 		fs.appendFile('errors.log', msg, (err) => {
 			if (err) console.error(err)
