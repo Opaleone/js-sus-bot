@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const fs = require("fs");
 
-dailyPP = {};
+let dailyPP = {};
 
 const ppCheck = (size, status, curUser) => {
   dailyPP[curUser] = 1;
@@ -44,8 +44,8 @@ module.exports = {
       if (curUser in dailyPP) return await interaction.reply({ content: "You've already checked your pp today. Try again tomorrow!", ephemeral: true });
       return await interaction.reply(ppCheck(size, status, curUser));
     } catch (e) {
-      const msg = `${todayDate}: ${e.message} ::truckStatus.js::\n`;
       const todayDate = new Date().toJSON();
+      const msg = `${todayDate}: ${e.message} ::truckStatus.js::\n`;
 
       // Log error to file
       fs.appendFile('errors.log', msg, (err) => {
