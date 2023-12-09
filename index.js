@@ -52,8 +52,8 @@ for (const file of eventFiles) {
 }
 
 client.on('messageCreate', async (message) => {
-	// does nothing if message creator is bot
 	try {	
+		// does nothing if message creator is bot
 		if (message.author.id === client.user.id) return;
 
 		const msg = message.content.toLowerCase();
@@ -68,8 +68,8 @@ client.on('messageCreate', async (message) => {
 			}
 		}
 	} catch (e) {
-		const msg = `${curTimeDate}: ${e.message} ::index.js::\n`;
 		const curTimeDate = new Date().toJSON();
+		const msg = `${curTimeDate}: ${e.message} ::index.js::\n`;
 
 		fs.appendFile('errors.log', msg, (err) => {
 			if (err) console.error(err)
