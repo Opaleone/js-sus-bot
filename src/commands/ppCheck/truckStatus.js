@@ -1,5 +1,8 @@
 const { SlashCommandBuilder } = require('discord.js');
 const fs = require("fs");
+const { debug } = require('../../../config.json');
+
+const allowedChannels = []
 
 let dailyPP = {};
 
@@ -28,7 +31,13 @@ module.exports = {
       .setName('pp')
       .setDescription('PP CHECK!'),
   async execute(interaction) {
-    try {  
+    try {
+      if (debug.status) {
+        if (!debug.channels.includes(interaction.channelId)) {
+          return await interaction.reply({ content: "Currently testing bot. Try again later!", ephemeral: true });
+        }
+      }
+
       // Checks if command is being used in the correct channel
       if (interaction.guildId === '690308107007557652') {
         if (interaction.channelId !== '1171394157475008572') {

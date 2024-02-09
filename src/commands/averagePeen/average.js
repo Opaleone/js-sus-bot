@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const fs = require('fs');
+const { debug } = require('../../../config.json');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -7,6 +8,12 @@ module.exports = {
       .setDescription('Your average so far...'),
   async execute(interaction) {
     try {
+      if (debug.status) {
+        if (!debug.channels.includes(interaction.channelId)) {
+          return await interaction.reply({ content: "Currently testing bot. Try again later!", ephemeral: true });
+        }
+      }
+
       if (interaction.guildId === '690308107007557652') {
         if (interaction.channelId !== '1171394157475008572') {
           return await interaction.reply({ content: "Try this in #pp-check channel!", ephemeral: true });
