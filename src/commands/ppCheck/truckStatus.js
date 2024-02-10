@@ -1,22 +1,10 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, GuildApplicationCommandManager } = require('discord.js');
 const fs = require("fs");
-const { debug } = require('../../../config.json');
+const config = require('../../../config.json');
+const { default: axios } = require('axios');
+const { interInfo } = require('../../../utils/interInfo');
 
-const allowedChannels = []
-
-let dailyPP = {};
-
-const ppCheck = (size, status, curUser) => {
-  dailyPP[curUser] = 1;
-  console.log(dailyPP);
-  const todayDate = new Date().toJSON();
-
-  const data = `${todayDate}: ${curUser} - ${size} - ${status}\n`
-
-  fs.appendFile('ppCheck.log', data, (err) => {
-    if (err) throw err
-  })
-  
+const ppCheck = (size, status) => {
   if (size > 8) {
     return `You are ${size} inches ${status}.\n:eggplant:`;
   } else if (size <= 3) {
@@ -32,12 +20,18 @@ module.exports = {
       .setDescription('PP CHECK!'),
   async execute(interaction) {
     try {
-      if (debug.status) {
-        if (!debug.channels.includes(interaction.channelId)) {
+      const getInterInfo = interInfo(interaction);
+      const truckStatus = ['hard', 'soft'];
+
+      const size = Math.round(Math.random() * 15);
+      const status = truckStatus[Math.floor(Math.random() * truckStatus.length)];
+
+      if (config.debug.status) {
+        if (!config.debug.channels.includes(interaction.channelId)) {
           return await interaction.reply({ content: "Currently testing bot. Try again later!", ephemeral: true });
         }
       }
-
+      
       // Checks if command is being used in the correct channel
       if (interaction.guildId === '690308107007557652') {
         if (interaction.channelId !== '1171394157475008572') {
@@ -45,13 +39,13 @@ module.exports = {
         }
       }
 
-      const truckStatus = ['hard', 'soft'];
-      const size = Math.round(Math.random() * 15);
-      const status = truckStatus[Math.floor(Math.random() * truckStatus.length)];
-      const curUser = interaction.user.username;
+      const checkCreate = await axios.post(`${config.baseUrl}checks/`, {
+        ...getInterInfo,
+        size: size,
+        status: status
+      });
 
-      if (curUser in dailyPP) return await interaction.reply({ content: "You've already checked your pp today. Try again tomorrow!", ephemeral: true });
-      return await interaction.reply(ppCheck(size, status, curUser));
+      return await interaction.reply(ppCheck(checkCreate.data.size, checkCreate.data.status));
     } catch (e) {
       const todayDate = new Date().toJSON();
       const msg = `${todayDate}: ${e.message} ::truckStatus.js::\n`;
