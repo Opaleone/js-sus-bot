@@ -1,6 +1,8 @@
 const { SlashCommandBuilder } = require('discord.js');
 const fs = require('fs');
-const { debug } = require('../../../config.json');
+const config = require('../../../config.json');
+const { interInfo } = require('../../../utils/interInfo');
+const { default: axios } = require('axios');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -8,8 +10,8 @@ module.exports = {
       .setDescription('Your average so far...'),
   async execute(interaction) {
     try {
-      if (debug.status) {
-        if (!debug.channels.includes(interaction.channelId)) {
+      if (config.debug.status) {
+        if (!config.debug.channels.includes(interaction.channelId)) {
           return await interaction.reply({ content: "Currently testing bot. Try again later!", ephemeral: true });
         }
       }
@@ -20,39 +22,33 @@ module.exports = {
         }
       }
 
-      const curUser = interaction.user.username;
-      let ppAvg = {};
+      const getInterInfo = interInfo(interaction);
 
-      const file = fs.readFileSync('ppCheck.log', function(err, data) {
-        console.log(data);
-      })
-      
-      const fileArr = file.toString().split(`\n`);
-      fileArr.pop();
-      
-      for (let i = 0; i < fileArr.length; i++) {
-        const cur = fileArr[i];
-        const curArr = cur.split(' ');
-      
-        if (curArr[1] === curUser) {
-          let curObj = {
-            total: parseInt(curArr[3]),
-            count: 1
-          }
-        
-          if (ppAvg[curArr[1]]) {
-            ppAvg[curArr[1]].count++;
-            ppAvg[curArr[1]].total += parseInt(curArr[3]);
-          } else {
-            ppAvg[curArr[1]] = curObj;
-          }
+      console.log(getInterInfo)
+
+      const allChecks = await axios.get(`${config.baseUrl}checks/allUserChecks`, {
+        params: {
+          ...getInterInfo
         }
+      });
+
+      if (!Object.keys(allChecks.data).length) {
+        return await interaction.reply({ content: `You haven't done a pp check yet.\n\nGet checked by yours truly with /pp.`, ephemeral: true });
       }
 
-      const average = (ppAvg[curUser].total / ppAvg[curUser].count).toFixed(2);
+      let tempHash = {
+        count: 0,
+        total: 0
+      };
 
-      if (ppAvg[curUser]) return await interaction.reply(`Your average peen size is ${average} inches.`); 
-      else return await interaction.reply({ content: `You haven't done a pp check yet.\n\nGet checked by yours truly with /pp.`, ephemeral: true });
+      for (const check of allChecks.data) {
+        tempHash.count++;
+        tempHash.total += check.size;
+      }
+
+      const avg = (tempHash.total / tempHash.count).toFixed(1);
+
+      return await interaction.reply(`You're average peen size is ${avg} inches.`)
     } catch (e) {
       const todayDate = new Date().toJSON();
       const msg = `${todayDate}: ${e.message} ::average.js::\n`;
