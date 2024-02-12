@@ -26,7 +26,7 @@ module.exports = {
 
       console.log(getInterInfo)
 
-      const allChecks = await axios.get(`${config.baseUrl}checks/allUserChecks`, {
+      const allChecks = await axios.get(`${config.baseUrl}/checks/allUserChecks`, {
         params: {
           ...getInterInfo
         }

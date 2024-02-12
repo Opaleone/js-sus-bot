@@ -18,12 +18,6 @@ module.exports = {
       })
       .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
   async execute(interaction) {
-    // const memberPerms = await interaction.member.permissions.toArray();
-
-    // if (!memberPerms.includes('Administrator')) {
-    //   return await interaction.reply({ content: "Must be Admin or higher to run this command!", ephemeral: true });
-    // }
-
     const editData = {
       guildId: interaction.guildId,
       guildName: interaction.member.guild.name,
@@ -31,7 +25,7 @@ module.exports = {
       checkAmount: interaction.options.getInteger('checkamount') ?? null
     }
 
-    const guildSetup = await axios.put(`${config.baseUrl}guild/edit`, editData)
+    const guildSetup = await axios.put(`${config.baseUrl}/guild/edit`, editData)
 
     console.log(guildSetup);
 

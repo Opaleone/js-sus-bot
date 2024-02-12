@@ -38,7 +38,7 @@ module.exports = {
         }
       }
 
-      const checkCreate = await axios.post(`${config.baseUrl}checks/`, {
+      const checkCreate = await axios.post(`${config.baseUrl}/checks/`, {
         ...getInterInfo,
         size: size,
         status: status
