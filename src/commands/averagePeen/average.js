@@ -3,6 +3,7 @@ const fs = require('fs');
 const config = require('../../../config.json');
 const { interInfo } = require('../../../utils/interInfo');
 const { default: axios } = require('axios');
+const restrictionFinder = require('../../../utils/restrictChannels');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -10,21 +11,20 @@ module.exports = {
       .setDescription('Your average so far...'),
   async execute(interaction) {
     try {
+      const restriction = await restrictionFinder(interaction);
+      const getInterInfo = interInfo(interaction);
+
       if (config.debug.status) {
         if (!config.debug.channels.includes(interaction.channelId)) {
           return await interaction.reply({ content: "Currently testing bot. Try again later!", ephemeral: true });
         }
       }
 
-      if (interaction.guildId === '690308107007557652') {
-        if (interaction.channelId !== '1171394157475008572') {
-          return await interaction.reply({ content: "Try this in #pp-check channel!", ephemeral: true });
+      if (interaction.guildId === restriction.guildId) {
+        if (interaction.channelId !== restriction.channelId) {
+          return await interaction.reply({ content: `Try this in #${restriction.channelName} channel!`, ephemeral: true });
         }
       }
-
-      const getInterInfo = interInfo(interaction);
-
-      console.log(getInterInfo)
 
       const allChecks = await axios.get(`${config.baseUrl}/checks/allUserChecks`, {
         params: {

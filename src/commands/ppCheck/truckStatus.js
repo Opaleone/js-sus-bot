@@ -3,6 +3,7 @@ const fs = require("fs");
 const config = require('../../../config.json');
 const { default: axios } = require('axios');
 const { interInfo } = require('../../../utils/interInfo');
+const restrictionFinder = require('../../../utils/restrictChannels');
 
 const ppCheck = (size, status) => {
   if (size > 8) {
@@ -20,23 +21,28 @@ module.exports = {
       .setDescription('PP CHECK!'),
   async execute(interaction) {
     try {
+      const restriction = await restrictionFinder(interaction);
+
       if (config.debug.status) {
         if (!config.debug.channels.includes(interaction.channelId)) {
           return await interaction.reply({ content: "Currently testing bot. Try again later!", ephemeral: true });
         }
       }
+      
+      if (interaction.guildId === restriction.guildId) {
+        if (interaction.channelId !== restriction.channelId) {
+          return await interaction.reply({ content: `Try this in #${restriction.channelName} channel!`, ephemeral: true });
+        }
+      }
 
       const getInterInfo = interInfo(interaction);
-      const truckStatus = ['hard', 'soft'];
+      // const dbUser = await axios.get(`${config.baseUrl}/user/${getInterInfo.uid}/${getInterInfo.username}`);
+      // const dbGuild = await axios.get(`${config.baseUrl}/guild/${getInterInfo.gid}/${getInterInfo.guildname}`);
 
+      const truckStatus = ['hard', 'soft'];
       const size = Math.round(Math.random() * 15);
       const status = truckStatus[Math.floor(Math.random() * truckStatus.length)];
       // Checks if command is being used in the correct channel
-      if (interaction.guildId === '690308107007557652') {
-        if (interaction.channelId !== '1171394157475008572') {
-          return await interaction.reply({ content: "Try this in #pp-check channel!", ephemeral: true });
-        }
-      }
 
       const checkCreate = await axios.post(`${config.baseUrl}/checks/`, {
         ...getInterInfo,
