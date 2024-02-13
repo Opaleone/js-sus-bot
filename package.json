@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "setCommands": "node src/functions/register-commands.js",
+    "deleteCommands": "node src/functions/delete-commands.js",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
