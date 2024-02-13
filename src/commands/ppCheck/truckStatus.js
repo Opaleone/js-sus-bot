@@ -23,12 +23,14 @@ module.exports = {
     try {
       const restriction = await restrictionFinder(interaction);
 
+      // for debugging
       if (config.debug.status) {
         if (!config.debug.channels.includes(interaction.channelId)) {
           return await interaction.reply({ content: "Currently testing bot. Try again later!", ephemeral: true });
         }
       }
       
+      // Checks if command is being used in the correct channel
       if (interaction.guildId === restriction.guildId) {
         if (interaction.channelId !== restriction.channelId) {
           return await interaction.reply({ content: `Try this in #${restriction.channelName} channel!`, ephemeral: true });
@@ -36,13 +38,10 @@ module.exports = {
       }
 
       const getInterInfo = interInfo(interaction);
-      // const dbUser = await axios.get(`${config.baseUrl}/user/${getInterInfo.uid}/${getInterInfo.username}`);
-      // const dbGuild = await axios.get(`${config.baseUrl}/guild/${getInterInfo.gid}/${getInterInfo.guildname}`);
 
       const truckStatus = ['hard', 'soft'];
       const size = Math.round(Math.random() * 15);
       const status = truckStatus[Math.floor(Math.random() * truckStatus.length)];
-      // Checks if command is being used in the correct channel
 
       const checkCreate = await axios.post(`${config.baseUrl}/checks/`, {
         ...getInterInfo,
