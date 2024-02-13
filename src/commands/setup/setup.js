@@ -16,7 +16,7 @@ module.exports = {
           .setName('channelid')
           .setDescription('Channel to restrict checks to')
       })
-      .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
+      .setDefaultMemberPermissions(0),
   async execute(interaction) {
     const editData = {
       guildId: interaction.guildId,
@@ -26,8 +26,6 @@ module.exports = {
     }
 
     const guildSetup = await axios.put(`${config.baseUrl}/guild/edit`, editData)
-
-    console.log(guildSetup);
 
     return await interaction.reply({ content: `Successfully updated your guild!`, ephemeral: true });
   }
