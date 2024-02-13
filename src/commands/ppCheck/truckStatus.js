@@ -38,6 +38,19 @@ module.exports = {
       }
 
       const getInterInfo = interInfo(interaction);
+      const dbGuild = await axios.get(`${config.baseUrl}/guild/${getInterInfo.gid}/${getInterInfo.guildname}`);
+
+      if (dbGuild.data.checkAmount) {
+        const allTodayChecks = await axios.get(`${config.baseUrl}/checks/todayChecks`, {
+          params: {
+            ...getInterInfo
+          }
+        })
+
+        if (Object.keys(allTodayChecks.data).length >= dbGuild.data.checkAmount) {
+          return await interaction.reply({ content: `You've already been checked ${dbGuild.data.checkAmount} ${dbGuild.data.checkAmount > 1 ? 'times' : 'time'} today. Try again tomorrow!`, ephemeral: true });
+        }
+      }
 
       const truckStatus = ['hard', 'soft'];
       const size = Math.round(Math.random() * 15);
