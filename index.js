@@ -1,15 +1,12 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
-const { token } = require('./config.json');
+const config = require('./config.json');
 const sleep = require('./utils/sleep');
+const { default: axios } = require('axios');
 
-const suspicious = ['cock', 'fuck me', 'hard', 'chub', 'daddy', 'horny', 'sexy', 'thicc', 'papi', 'head',
-'mami', 'mommy', 'trans', 'cum', 'coom', 'whore', 'bitch', 'erect', 'pipe', 'flaccid',
-'masturbate', 'beat my meat', 'splooge', 'fat cheeks', 'bussy', 'sploosh', 'foreskin'];
-
-const susResponses = ['ayoooo?!?!', 'Pause', 'Wut?', 'Wanna run that by me again?', 'no shot', 'HUH?!?!', "Ain't no way",
-'Yo wuuuuuuuuut', 'No maidens??', "No thanks, I'm a vegetarian."];
+const susWords = await axios.get(`${config.baseUrl}/suspicious/`);
+const susResponses = await axios.get(`${config.baseUrl}/responses/`);
 
 const client = new Client({ 
   intents: [
@@ -61,10 +58,10 @@ client.on('messageCreate', async (message) => {
 
 		// checks if message contains any suspicious words
 		for (const word of msgArr) {
-			if(suspicious.includes(word)) {
+			if(susWords.data.includes(word)) {
 				// waits 5 seconds before replying
 				await sleep(5000);
-				await message.reply(susResponses[Math.floor(Math.random() * susResponses.length)]);
+				await message.reply(susResponses.data[Math.floor(Math.random() * susResponses.length)]);
 			}
 		}
 	} catch (e) {
@@ -77,4 +74,4 @@ client.on('messageCreate', async (message) => {
 	}
 });
 
-client.login(token);
+client.login(config.token);
