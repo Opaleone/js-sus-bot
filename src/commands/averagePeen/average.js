@@ -12,7 +12,6 @@ module.exports = {
   async execute(interaction) {
     try {
       const restriction = await restrictionFinder(interaction);
-      const getInterInfo = interInfo(interaction);
 
       if (config.debug.status) {
         if (!config.debug.channels.includes(interaction.channelId)) {
@@ -25,6 +24,8 @@ module.exports = {
           return await interaction.reply({ content: `Try this in #${restriction.channelName} channel!`, ephemeral: true });
         }
       }
+      
+      const getInterInfo = interInfo(interaction);
 
       const allChecks = await axios.get(`${config.baseUrl}/checks/allUserChecks`, {
         params: {
