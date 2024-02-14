@@ -18,15 +18,25 @@ module.exports = {
       })
       .setDefaultMemberPermissions(0),
   async execute(interaction) {
-    const editData = {
-      guildId: interaction.guildId,
-      guildName: interaction.member.guild.name,
-      channelId: interaction.options.getString('channelid') ?? null,
-      checkAmount: interaction.options.getInteger('checkamount') ?? null
+    try {
+      const editData = {
+        guildId: interaction.guildId,
+        guildName: interaction.member.guild.name,
+        channelId: interaction.options.getString('channelid') ?? null,
+        checkAmount: interaction.options.getInteger('checkamount') ?? null
+      }
+  
+      await axios.put(`${config.baseUrl}/guild/edit`, editData)
+  
+      return await interaction.reply({ content: `Successfully updated your guild!`, ephemeral: true });
+    } catch (e) {
+      const todayDate = new Date().toJSON();
+      const msg = `${todayDate}: ${e.message} ::truckStatus.js::\n`;
+
+      // Log error to file
+      fs.appendFile('errors.log', msg, (err) => {
+        if (err) console.error(err)
+      })
     }
-
-    const guildSetup = await axios.put(`${config.baseUrl}/guild/edit`, editData)
-
-    return await interaction.reply({ content: `Successfully updated your guild!`, ephemeral: true });
   }
 }
