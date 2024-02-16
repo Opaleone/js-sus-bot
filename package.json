@@ -1,7 +1,7 @@
 {
   "name": "sus-bot",
-  "version": "1.0.0",
-  "description": "",
+  "version": "2.0.3",
+  "description": "A Discord bot that monitors chat for suspicious words and responds accordingly, provides a 'check' command with random size and status, and calculates the average of previous 'checks'.",
   "main": "index.js",
   "scripts": {
     "setCommands": "node src/functions/register-commands.js",
@@ -9,9 +9,12 @@
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Opaleone",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Opaleone/js-sus-bot"
+  },
+  "license": "MIT",
   "dependencies": {
     "axios": "^1.6.7",
     "discord.js": "^14.13.0"
