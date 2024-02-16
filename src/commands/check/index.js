@@ -2,10 +2,9 @@ const { SlashCommandBuilder, GuildApplicationCommandManager } = require('discord
 const fs = require("fs");
 const config = require('../../../config.json');
 const { default: axios } = require('axios');
-const { interInfo } = require('../../../utils/interInfo');
-const restrictionFinder = require('../../../utils/restrictChannels');
+const { interInfo, restrictionFinder } = require('../../../utils/index');
 
-const ppCheck = (size, status) => {
+const check = (size, status) => {
   if (size > 8) {
     return `You are ${size} inches ${status}.\n:eggplant:`;
   } else if (size <= 3) {
@@ -33,7 +32,7 @@ module.exports = {
       // Checks if command is being used in the correct channel
       if (interaction.guildId === restriction.guildId) {
         if (interaction.channelId !== restriction.channelId) {
-          return await interaction.reply({ content: `Try this in #${restriction.channelName} channel!`, ephemeral: true });
+          return await interaction.reply({ content: `Try this in #${restriction.channelName}!`, ephemeral: true });
         }
       }
 
@@ -52,17 +51,17 @@ module.exports = {
         }
       }
 
-      const truckStatus = ['hard', 'soft'];
+      const status = ['hard', 'soft'];
       const size = Math.round(Math.random() * 15);
-      const status = truckStatus[Math.floor(Math.random() * truckStatus.length)];
+      const randStatus = status[Math.floor(Math.random() * status.length)];
 
       const checkCreate = await axios.post(`${config.baseUrl}/checks/`, {
         ...getInterInfo,
         size: size,
-        status: status
+        status: randStatus
       });
 
-      return await interaction.reply(ppCheck(checkCreate.data.size, checkCreate.data.status));
+      return await interaction.reply(check(checkCreate.data.size, checkCreate.data.status));
     } catch (e) {
       const todayDate = new Date().toJSON();
       const msg = `${todayDate}: ${e.message} ::truckStatus.js::\n`;

@@ -1,9 +1,8 @@
 const { SlashCommandBuilder } = require('discord.js');
 const fs = require('fs');
 const config = require('../../../config.json');
-const { interInfo } = require('../../../utils/interInfo');
+const { interInfo, restrictionFinder } = require('../../../utils/index');
 const { default: axios } = require('axios');
-const restrictionFinder = require('../../../utils/restrictChannels');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -21,7 +20,7 @@ module.exports = {
 
       if (interaction.guildId === restriction.guildId) {
         if (interaction.channelId !== restriction.channelId) {
-          return await interaction.reply({ content: `Try this in #${restriction.channelName} channel!`, ephemeral: true });
+          return await interaction.reply({ content: `Try this in #${restriction.channelName}!`, ephemeral: true });
         }
       }
       

@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const fs = require('fs');
 const config = require('../../../config.json');
-const restrictionFinder = require('../../../utils/restrictChannels');
+const { restrictionFinder } = require('../../../utils/index');
 const { default: axios } = require('axios');
 
 module.exports = {
@@ -20,6 +20,22 @@ module.exports = {
       }),
   async execute(interaction) {
     try {
+      const restriction = await restrictionFinder(interaction);
+
+      // for debugging
+      if (config.debug.status) {
+        if (!config.debug.channels.includes(interaction.channelId)) {
+          return await interaction.reply({ content: "Currently testing bot. Try again later!", ephemeral: true });
+        }
+      }
+      
+      // Checks if command is being used in the correct channel
+      if (interaction.guildId === restriction.guildId) {
+        if (interaction.channelId !== restriction.channelId) {
+          return await interaction.reply({ content: `Try this in #${restriction.channelName}!`, ephemeral: true });
+        }
+      }
+
       const tempObj = {
         word: interaction.options.getString('susword') ?? null,
         phrase: interaction.options.getString('susresponse') ?? null

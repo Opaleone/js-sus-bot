@@ -1,6 +1,6 @@
 const { default: axios } = require('axios');
 const config = require('../../../config.json');
-const { SlashCommandBuilder, GuildApplicationCommandManager, PermissionsBitField, PermissionFlagsBits } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
