@@ -2,11 +2,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const config = require('./config.json');
-const sleep = require('./utils/sleep');
-const { default: axios } = require('axios');
-
-const susWords = await axios.get(`${config.baseUrl}/suspicious/`);
-const susResponses = await axios.get(`${config.baseUrl}/responses/`);
+const utils = require('./utils/index');
 
 const client = new Client({ 
   intents: [
@@ -53,15 +49,23 @@ client.on('messageCreate', async (message) => {
 		// does nothing if message creator is bot
 		if (message.author.id === client.user.id) return;
 
+		let susWordArr = [];
+		let susResponseArr = [];
+
+		const { susWords, susResponses } = await utils.wordsAndPhrases();
+
+		for (const entry of susWords.data) susWordArr.push(entry.word);
+		for (const entry of susResponses.data) susResponseArr.push(entry.phrase);
+
 		const msg = message.content.toLowerCase();
 		const msgArr = msg.split(' ');
 
 		// checks if message contains any suspicious words
 		for (const word of msgArr) {
-			if(susWords.data.includes(word)) {
+			if(susWordArr.includes(word)) {
 				// waits 5 seconds before replying
-				await sleep(5000);
-				await message.reply(susResponses.data[Math.floor(Math.random() * susResponses.length)]);
+				await utils.sleep(5000);
+				await message.reply(susResponseArr[Math.floor(Math.random() * susResponseArr.length)]);
 			}
 		}
 	} catch (e) {
