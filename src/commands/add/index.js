@@ -41,13 +41,9 @@ module.exports = {
         phrase: interaction.options.getString('susresponse') ?? null
       }
   
-      if (tempObj.word) {
-        await axios.post(`${config.baseUrl}/suspicious/${tempObj.word}`)
-      }
+      if (tempObj.word) await axios.post(`${config.baseUrl}/suspicious/${tempObj.word}`);
   
-      if (tempObj.phrase) {
-        await axios.post(`${config.baseUrl}/responses/${tempObj.phrase}`)
-      }
+      if (tempObj.phrase) await axios.post(`${config.baseUrl}/responses/${tempObj.phrase}`);
 
       await interaction.reply({ content: "Successfully added!", ephemeral: true });
     } catch (e) {
