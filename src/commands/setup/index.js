@@ -1,4 +1,5 @@
 const { default: axios } = require('axios');
+const fs = require('fs');
 const config = require('../../../config.json');
 const { SlashCommandBuilder } = require('discord.js');
 
