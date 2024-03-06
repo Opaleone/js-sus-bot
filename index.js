@@ -63,7 +63,7 @@ client.on('messageCreate', async (message) => {
 		// checks if message contains any suspicious words
 		for (const word of msgArr) {
 			if(susWordArr.includes(word)) {
-				// waits 5 seconds before replying
+				// waits up to 5 seconds before replying
 				await utils.sleep(5000);
 				await message.reply(susResponseArr[Math.floor(Math.random() * susResponseArr.length)]);
 			}
