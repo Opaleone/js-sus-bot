@@ -18,8 +18,7 @@ module.exports = {
     return { susWords, susResponses };
   },
   restrictionFinder: async (interaction) => {
-    const getInterInfo = module.exports.interInfo(interaction);
-    const dbGuild = await axios.get(`${config.baseUrl}/guild/${getInterInfo.gid}/${getInterInfo.guildname}`);
+    const dbGuild = await axios.get(`${config.baseUrl}/guild/${interaction.guildId}/${interaction.member.guild.name}`);
     let restriction = {};
   
     if (dbGuild.data.channelId) {
