@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, GuildApplicationCommandManager } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
 const fs = require("fs");
 const config = require('../../../config.json');
 const { default: axios } = require('axios');
