@@ -1,6 +1,6 @@
 {
   "name": "sus-bot",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "A Discord bot that monitors chat for suspicious words and responds accordingly, provides a 'check' command with random size and status, and calculates the average of previous 'checks'.",
   "main": "index.js",
   "scripts": {
