@@ -65,7 +65,7 @@ module.exports = {
       return await interaction.reply(check(checkCreate.data.size, checkCreate.data.status));
     } catch (e) {
       const todayDate = new Date().toJSON();
-      const msg = `${todayDate}: ${e} ::truckStatus.js::\n`;
+      const msg = `${todayDate}: ${e} ::check.js::\n`;
 
       // Log error to file
       fs.appendFile('errors.log', msg, (err) => {
