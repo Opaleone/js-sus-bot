@@ -4,6 +4,26 @@ const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const config = require('./config.json');
 const utils = require('./utils/index');
 
+process.on("uncaughtException", (e) => {
+	const curTimeDate = new Date().toJSON();
+	const msg = `${curTimeDate}: ${e.message} ::index.js::\n`;
+
+	fs.appendFile('errors.log', msg, (err) => {
+		if (err) console.error(err)
+	})
+	process.exit(1)
+})
+
+process.on("unhandledRejection", (e) => {
+	const curTimeDate = new Date().toJSON();
+	const msg = `${curTimeDate}: ${e.message} ::index.js::\n`;
+
+	fs.appendFile('errors.log', msg, (err) => {
+		if (err) console.error(err)
+	})
+	process.exit(1)
+})
+
 const client = new Client({ 
   intents: [
     GatewayIntentBits.Guilds,
