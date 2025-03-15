@@ -8,21 +8,25 @@ process.on("uncaughtException", (e) => {
 	const curTimeDate = new Date().toJSON();
 	const msg = `${curTimeDate}: ${e.message} ::index.js::\n`;
 
-	fs.appendFile('errors.log', msg, (err) => {
-		if (err) console.error(err)
+	fs.appendFile('errors.log', msg, (e) => {
+		if (e) console.error(e)
 	})
-	process.exit(1)
-})
+	if (e.message.includes("handshake")) {
+			process.exit(1);
+	}
+});
 
-process.on("unhandledRejection", (e) => {
+process.on("unhandledRejection", (e, promise) => {
 	const curTimeDate = new Date().toJSON();
 	const msg = `${curTimeDate}: ${e.message} ::index.js::\n`;
 
-	fs.appendFile('errors.log', msg, (err) => {
-		if (err) console.error(err)
+	fs.appendFile('errors.log', msg, (e) => {
+		if (e) console.error(e)
 	})
-	process.exit(1)
-})
+	if (e.message && e.message.includes("handshake")) {
+			process.exit(1);
+	}
+});
 
 const client = new Client({ 
   intents: [
