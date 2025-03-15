@@ -79,3 +79,6 @@ client.on('messageCreate', async (message) => {
 });
 
 client.login(config.token);
+
+
+utils.hawkeyeConnect();
